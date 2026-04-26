@@ -50,7 +50,6 @@ All four stages were completed. SQL + Python (Stages 1 + 2) cover the core data 
 aws-healthcare-pipeline/
 │
 ├── README.md
-├── architecture.png
 │
 ├── queries.sql
 │
