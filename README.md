@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AWS Healthcare Facility Accreditation Pipeline
 
 End-to-end AWS data pipeline for extracting and filtering healthcare facility accreditation data.
@@ -38,3 +39,6 @@ python filter_expiring.py
 - `filter_expiring.py` — Stage 2: Python filtering script
 - `facilities.json` — Sample NDJSON dataset (3 facilities)
 - Athena queries in `athena_queries.sql`
+=======
+# aws-healthcare-pipeline
+>>>>>>> origin/main
