@@ -6,3 +6,18 @@ End-to-end AWS data pipeline for extracting and filtering healthcare facility ac
 
 S3 (raw JSON) → Athena SQL (extraction) → Python/boto3 (filtering) → S3 (filtered output)
 
+## Stages Completed
+
+**Stage 1: Data Extraction with Athena**
+- Created external table over S3-hosted NDJSON using OpenX JSON SerDe
+- Queried nested JSON to extract facility_id, name, employee_count, service count, first accreditation expiry, and state
+- Ran aggregation query counting accredited facilities per state
+- Results saved to S3 query-results prefix
+
+**Stage 2: Data Processing with Python**
+- boto3 script reads NDJSON records from S3 line by line
+- Filters facilities with any accreditation expiring within 6 months from today
+- Writes filtered records to separate S3 prefix as NDJSON
+- Full error handling: missing keys, malformed JSON, S3 read/write errors, unparseable dates
+- Structured logging for auditability
+
