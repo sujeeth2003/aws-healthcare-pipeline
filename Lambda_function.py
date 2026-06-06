@@ -14,3 +14,16 @@ RESULTS_PREFIX     = "athena-state-counts/"
 MAX_WAIT_SECONDS   = 55   # Lambda default timeout is 60s, stop polling before that
 POLL_INTERVAL      = 3
 
+
+def run_athena_query(athena_client, query: str, output_location: str) -> str:
+    """Start Athena query and return execution ID."""
+    response = athena_client.start_query_execution(
+        QueryString=query,
+        QueryExecutionContext={"Database": ATHENA_DATABASE},
+        ResultConfiguration={"OutputLocation": output_location},
+    )
+    query_id = response["QueryExecutionId"]
+    logger.info(f"Started Athena query: {query_id}")
+    return query_id
+
+
