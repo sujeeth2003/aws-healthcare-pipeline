@@ -27,3 +27,17 @@ def run_athena_query(athena_client, query: str, output_location: str) -> str:
     return query_id
 
 
+def wait_for_query(athena_client, query_id: str) -> str:
+    """Poll until query finishes. Returns final state."""
+    elapsed = 0
+    while elapsed < MAX_WAIT_SECONDS:
+        response = athena_client.get_query_execution(QueryExecutionId=query_id)
+        state = response["QueryExecution"]["Status"]["State"]
+        logger.info(f"Query {query_id} state: {state} ({elapsed}s elapsed)")
+
+        if state in ("SUCCEEDED", "FAILED", "CANCELLED"):
+            return state
+
+        time.sleep(POLL_INTERVAL)
+        elapsed += POLL_INTERVAL
+
