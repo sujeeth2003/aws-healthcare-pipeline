@@ -21,3 +21,15 @@ S3 (raw JSON) → Athena SQL (extraction) → Python/boto3 (filtering) → S3 (f
 - Full error handling: missing keys, malformed JSON, S3 read/write errors, unparseable dates
 - Structured logging for auditability
 
+## Stage Selection Rationale
+
+I chose SQL + Python because it demonstrates end-to-end data engineering: raw nested JSON extraction via Athena and programmatic filtering/routing via boto3. Together they cover the core pipeline skills — schema-on-read querying, conditional data transformation, and S3-based data movement — that map most directly to the healthcare analytics use case.
+
+## Setup
+
+```bash
+pip install boto3 python-dateutil
+aws configure   # enter your credentials
+python filter_expiring.py
+```
+
