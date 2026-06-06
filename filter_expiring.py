@@ -67,3 +67,21 @@ def has_expiring_accreditation(facility, cutoff_date):
                 f"facility {facility.get('facility_id', 'UNKNOWN')}: {e}"
             )
 
+    return False
+
+
+def write_facilities_to_s3(s3_client, bucket, key, facilities):
+    logger.info(f"Writing {len(facilities)} records to s3://{bucket}/{key}")
+    try:
+        ndjson_content = "\n".join(json.dumps(f) for f in facilities)
+        s3_client.put_object(
+            Bucket=bucket,
+            Key=key,
+            Body=ndjson_content.encode("utf-8"),
+            ContentType="application/json",
+        )
+        logger.info("Upload successful")
+    except Exception as e:
+        logger.error(f"Failed to write to S3: {e}")
+        raise
+
