@@ -56,3 +56,16 @@ def get_query_results(athena_client, query_id: str) -> list[dict]:
         results.append(dict(zip(headers, values)))
     return results
 
+
+def copy_results_to_output(s3_client, query_id: str, bucket: str, dest_prefix: str):
+    """Copy Athena result CSV from query-results/ to a named output location."""
+    src_key  = f"{OUTPUT_PREFIX}{query_id}.csv"
+    dest_key = f"{dest_prefix}state_counts_latest.csv"
+    s3_client.copy_object(
+        Bucket=bucket,
+        CopySource={"Bucket": bucket, "Key": src_key},
+        Key=dest_key,
+    )
+    logger.info(f"Copied results to s3://{bucket}/{dest_key}")
+
+
