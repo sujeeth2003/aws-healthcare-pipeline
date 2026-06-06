@@ -38,6 +38,3 @@ python filter_expiring.py
 - `filter_expiring.py` — Stage 2: Python filtering script
 - `facilities.json` — Sample NDJSON dataset (3 facilities)
 - Athena queries in `athena_queries.sql`
-=======
-# aws-healthcare-pipeline
->>>>>>> origin/main
