@@ -114,3 +114,8 @@ def main():
     else:
         logger.info("No expiring facilities found. Nothing written to output.")
 
+    logger.info("Done.")
+
+
+if __name__ == "__main__":
+    main()
