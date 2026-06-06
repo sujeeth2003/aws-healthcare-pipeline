@@ -23,3 +23,22 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def read_facilities_from_s3(s3_client, bucket, key):
+    logger.info(f"Reading s3://{bucket}/{key}")
+    try:
+        response = s3_client.get_object(Bucket=bucket, Key=key)
+        content  = response["Body"].read().decode("utf-8")
+    except Exception as e:
+        logger.error(f"Failed to read from S3: {e}")
+        raise
+
+    facilities = []
+    for line_num, line in enumerate(content.strip().split("\n"), start=1):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            facilities.append(json.loads(line))
+        except json.JSONDecodeError as e:
+            logger.warning(f"Skipping malformed JSON on line {line_num}: {e}")
+
