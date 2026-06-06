@@ -85,3 +85,19 @@ def lambda_handler(event, context):
     athena = boto3.client("athena", region_name="us-east-1")
     s3     = boto3.client("s3",     region_name="us-east-1")
 
+    output_location = f"s3://{OUTPUT_BUCKET}/{OUTPUT_PREFIX}"
+
+    # Count accredited facilities per state
+    query = f"""
+        SELECT
+            location.state           AS state,
+            COUNT(*)                 AS accredited_facility_count
+        FROM {ATHENA_DATABASE}.{ATHENA_TABLE}
+        WHERE cardinality(accreditations) > 0
+        GROUP BY location.state
+        ORDER BY accredited_facility_count DESC
+    """
+
+    # Run query
+    query_id = run_athena_query(athena, query, output_location)
+
