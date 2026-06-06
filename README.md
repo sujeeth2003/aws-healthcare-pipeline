@@ -15,11 +15,11 @@ Step Functions orchestrates the full flow with retries and error handling.
 
 ## Stages Completed
 
-**Stage 1: Data Extraction with Athena**
-- Created external table over S3-hosted NDJSON using OpenX JSON SerDe
-- Queried nested JSON to extract facility_id, name, employee_count, service count, first accreditation expiry, and state
-- Ran aggregation query counting accredited facilities per state
-- Results saved to S3 query-results prefix
+### Stage 1 — Data Extraction with Athena
+- Created external table over S3-hosted NDJSON using OpenX JSON SerDe to handle nested JSON structure
+- Query 1: extracts `facility_id`, `facility_name`, `employee_count`, service count, and first accreditation expiry date per facility
+- Query 2: counts accredited facilities grouped by state
+- Results saved automatically to S3 `query-results/` prefix
 
 **Stage 2: Data Processing with Python**
 - boto3 script reads NDJSON records from S3 line by line
