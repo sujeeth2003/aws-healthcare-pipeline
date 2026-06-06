@@ -101,3 +101,22 @@ def lambda_handler(event, context):
     # Run query
     query_id = run_athena_query(athena, query, output_location)
 
+    # Wait for result
+    final_state = wait_for_query(athena, query_id)
+
+    if final_state == "SUCCEEDED":
+        results = get_query_results(athena, query_id)
+        logger.info(f"Query results: {json.dumps(results)}")
+        copy_results_to_output(s3, query_id, OUTPUT_BUCKET, RESULTS_PREFIX)
+        return {
+            "statusCode": 200,
+            "body": json.dumps({
+                "message": "Query succeeded",
+                "query_id": query_id,
+                "results": results
+            })
+        }
+    else:
+        error_msg = f"Athena query {query_id} ended with state: {final_state}"
+        logger.error(error_msg)
+        raise RuntimeError(error_msg)
