@@ -4,7 +4,14 @@ End-to-end serverless data pipeline on AWS for processing and analyzing healthca
 
 ## Architecture
 
-S3 (raw JSON) → Athena SQL (extraction) → Python/boto3 (filtering) → S3 (filtered output)
+```
+S3 (raw JSON upload)
+    → Lambda (triggered on upload)
+        → Athena SQL (count accredited facilities per state)
+            → Success: copy results to S3 production/
+            → Failure: SNS email alert
+Step Functions orchestrates the full flow with retries and error handling.
+```
 
 ## Stages Completed
 
