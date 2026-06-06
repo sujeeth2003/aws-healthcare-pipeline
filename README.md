@@ -1,6 +1,6 @@
 # AWS Healthcare Facility Accreditation Pipeline
 
-End-to-end AWS data pipeline for extracting and filtering healthcare facility accreditation data.
+End-to-end serverless data pipeline on AWS for processing and analyzing healthcare facility accreditation data.
 
 ## Architecture
 
