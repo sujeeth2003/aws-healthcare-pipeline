@@ -69,3 +69,19 @@ def copy_results_to_output(s3_client, query_id: str, bucket: str, dest_prefix: s
     logger.info(f"Copied results to s3://{bucket}/{dest_key}")
 
 
+def lambda_handler(event, context):
+    logger.info(f"Triggered by event: {json.dumps(event)}")
+
+    # Extract the uploaded file info from the S3 event
+    try:
+        record      = event["Records"][0]
+        bucket_name = record["s3"]["bucket"]["name"]
+        object_key  = record["s3"]["object"]["key"]
+        logger.info(f"New file uploaded: s3://{bucket_name}/{object_key}")
+    except (KeyError, IndexError) as e:
+        logger.error(f"Could not parse S3 event: {e}")
+        raise ValueError(f"Invalid S3 event structure: {e}")
+
+    athena = boto3.client("athena", region_name="us-east-1")
+    s3     = boto3.client("s3",     region_name="us-east-1")
+
