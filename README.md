@@ -33,3 +33,8 @@ aws configure   # enter your credentials
 python filter_expiring.py
 ```
 
+## Files
+
+- `filter_expiring.py` — Stage 2: Python filtering script
+- `facilities.json` — Sample NDJSON dataset (3 facilities)
+- Athena queries in `athena_queries.sql`
