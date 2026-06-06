@@ -41,3 +41,18 @@ def wait_for_query(athena_client, query_id: str) -> str:
         time.sleep(POLL_INTERVAL)
         elapsed += POLL_INTERVAL
 
+    logger.warning(f"Query {query_id} still running after {elapsed}s — Lambda timeout approaching")
+    return "TIMEOUT"
+
+
+def get_query_results(athena_client, query_id: str) -> list[dict]:
+    """Fetch rows from completed Athena query."""
+    response  = athena_client.get_query_results(QueryExecutionId=query_id)
+    rows      = response["ResultSet"]["Rows"]
+    headers   = [col["VarCharValue"] for col in rows[0]["Data"]]
+    results   = []
+    for row in rows[1:]:   # skip header row
+        values = [col.get("VarCharValue", "") for col in row["Data"]]
+        results.append(dict(zip(headers, values)))
+    return results
+
