@@ -82,6 +82,19 @@ aws_secret_access_key = YOUR_SECRET
 region = us-east-1
 ```
 
-- `filter_expiring.py` — Stage 2: Python filtering script
-- `facilities.json` — Sample NDJSON dataset (3 facilities)
-- Athena queries in `athena_queries.sql`
+Update `BUCKET_NAME` in `filter_expiring.py` to your bucket name, then run:
+```bash
+python stage2-python/filter_expiring.py
+```
+
+Expected output:
+```
+INFO  Today: 2026-xx-xx | Cutoff (6 months out): 2026-xx-xx
+INFO  Loaded 3 facility records
+INFO  Facilities with accreditations expiring within 6 months: 2 / 3
+INFO    → FAC54321 — Green Valley Clinic
+INFO    → FAC67890 — Lakeside Medical Center
+INFO  Writing 2 records to s3://your-bucket/filtered-output/expiring_facilities.json
+INFO  Upload successful
+```
+
