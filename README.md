@@ -25,8 +25,14 @@ Step Functions orchestrates the full flow with retries and error handling.
 - `boto3` script reads NDJSON records from S3 line by line
 - Filters any facility with at least one accreditation expiring within 6 months from run date
 - Writes filtered records to separate S3 prefix as NDJSON
-- Full error handling: missing keys, malformed JSON, S3 read/write errors, unparseable dates
-- Structured logging for auditability
+- Full error handling: S3 access errors, malformed JSON lines, unparseable dates, missing fields — all caught and logged without crashing
+
+### Stage 3 — Event-Driven Processing with Lambda
+- Lambda function triggers automatically on new `.json` uploads to `raw-data/` S3 prefix
+- Runs Athena count-by-state query, polls for completion with timeout guard (55s max to stay within Lambda limit)
+- On success: copies results CSV to named output location in S3
+- On failure: raises exception with structured logging for CloudWatch
+
 
 ## Stage Selection Rationale
 
