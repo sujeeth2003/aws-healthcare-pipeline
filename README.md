@@ -42,7 +42,7 @@ Step Functions orchestrates the full flow with retries and error handling.
 
 ## Stage Selection Rationale
 
-I chose SQL + Python because it demonstrates end-to-end data engineering: raw nested JSON extraction via Athena and programmatic filtering/routing via boto3. Together they cover the core pipeline skills — schema-on-read querying, conditional data transformation, and S3-based data movement — that map most directly to the healthcare analytics use case.
+All four stages were completed. SQL + Python (Stages 1 + 2) cover the core data engineering pipeline — schema-on-read querying over nested JSON and programmatic record filtering. Lambda + Step Functions (Stages 3 + 4) add production-grade automation — event-driven execution, polling, retry logic, and alerting. Together they demonstrate a complete serverless pipeline from raw data ingestion to production output.
 
 ## Setup
 
