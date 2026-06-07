@@ -129,3 +129,14 @@ Athena reads this using OpenX JSON SerDe with STRUCT and ARRAY column types to h
 | IAM | Least-privilege roles for each service |
 | CloudWatch | Lambda execution logs and monitoring |
 
+## S3 Bucket Structure
+
+```
+your-bucket/
+├── raw-data/                    ← input NDJSON files
+├── query-results/               ← Athena query output (auto-generated)
+├── filtered-output/             ← Stage 2 filtered records
+├── athena-state-counts/         ← Stage 3 Lambda output
+└── production/                  ← Stage 4 final production output
+```
+
