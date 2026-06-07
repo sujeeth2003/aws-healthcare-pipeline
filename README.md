@@ -62,3 +62,21 @@ aws-healthcare-pipeline/
 └── facilities.json
 ```
 
+## Setup & Running Locally (Stage 2)
+
+Install dependencies:
+```bash
+pip install boto3 python-dateutil
+```
+
+Configure AWS credentials on Windows — create this file:
+```
+.env
+```
+With this content:
+```
+aws_access_key_id='YOUR_KEY'
+aws_secret_access_key='YOUR_SECRET'
+Bucket_name='bucket name'
+```
+
