@@ -44,7 +44,7 @@ Step Functions orchestrates the full flow with retries and error handling.
 
 All four stages were completed. SQL + Python (Stages 1 + 2) cover the core data engineering pipeline — schema-on-read querying over nested JSON and programmatic record filtering. Lambda + Step Functions (Stages 3 + 4) add production-grade automation — event-driven execution, polling, retry logic, and alerting. Together they demonstrate a complete serverless pipeline from raw data ingestion to production output.
 
-## Setup
+## Repository Structure
 
 ```bash
 pip install boto3 python-dateutil
