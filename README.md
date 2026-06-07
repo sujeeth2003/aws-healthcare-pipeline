@@ -33,6 +33,12 @@ Step Functions orchestrates the full flow with retries and error handling.
 - On success: copies results CSV to named output location in S3
 - On failure: raises exception with structured logging for CloudWatch
 
+### Stage 4 — Workflow Orchestration with Step Functions
+- Standard state machine triggered manually (or via S3 EventBridge rule)
+- Flow: Invoke Lambda → wait → on success copy results to `production/` → on failure publish SNS alert
+- Retry logic on Lambda invocation errors (2 retries, exponential backoff)
+- Catch-all error handler routes any failure to SNS notification before terminal Fail state
+- Least-privilege IAM roles applied throughout
 
 ## Stage Selection Rationale
 
