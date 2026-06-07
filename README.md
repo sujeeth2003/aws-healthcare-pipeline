@@ -140,3 +140,10 @@ your-bucket/
 └── production/                  ← Stage 4 final production output
 ```
 
+## Security Considerations
+
+- Separate IAM roles for Lambda and Step Functions with only required permissions
+- No credentials hardcoded anywhere — IAM roles in AWS, credentials file locally
+- S3 bucket private with no public access enabled
+- Lambda follows least-privilege: only S3 and Athena access granted
+
