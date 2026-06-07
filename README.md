@@ -46,6 +46,26 @@ All four stages were completed. SQL + Python (Stages 1 + 2) cover the core data 
 
 ## Repository Structure
 
+```
+aws-healthcare-pipeline/
+│
+├── README.md
+├── architecture.png
+│
+├── queries.sql
+│
+├── filter_expiring.py
+│
+├── lambda_function.py
+│
+├── state_machine.json
+│
+└── facilities.json
+```
+
+## Setup & Running Locally (Stage 2)
+
+Install dependencies:
 ```bash
 pip install boto3 python-dateutil
 aws configure   # enter your credentials
