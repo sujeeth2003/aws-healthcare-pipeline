@@ -82,7 +82,7 @@ Bucket_name='bucket name'
 
 Update `BUCKET_NAME` in `filter_expiring.py` to your bucket name, then run:
 ```bash
-python stage2-python/filter_expiring.py
+python filter_expiring.py
 ```
 
 Expected output:
