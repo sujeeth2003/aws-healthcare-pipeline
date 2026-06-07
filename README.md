@@ -115,3 +115,17 @@ Input data is NDJSON (one JSON object per line) stored in S3. Each facility reco
 }
 ```
 
+Athena reads this using OpenX JSON SerDe with STRUCT and ARRAY column types to handle the nested structure.
+
+## AWS Services Used
+
+| Service | Purpose |
+|---|---|
+| S3 | Raw data storage, query results, production output |
+| Athena | SQL queries over nested JSON |
+| Lambda | Event-driven query execution on S3 upload |
+| Step Functions | Pipeline orchestration with error handling |
+| SNS | Failure email alerts |
+| IAM | Least-privilege roles for each service |
+| CloudWatch | Lambda execution logs and monitoring |
+
