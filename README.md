@@ -75,10 +75,9 @@ Configure AWS credentials on Windows — create this file:
 ```
 With this content:
 ```
-[default]
-aws_access_key_id = YOUR_KEY
-aws_secret_access_key = YOUR_SECRET
-region = us-east-1
+aws_access_key_id='YOUR_KEY'
+aws_secret_access_key='YOUR_SECRET'
+Bucket_name='bucket name'
 ```
 
 Update `BUCKET_NAME` in `filter_expiring.py` to your bucket name, then run:
