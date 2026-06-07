@@ -98,3 +98,20 @@ INFO  Writing 2 records to s3://your-bucket/filtered-output/expiring_facilities.
 INFO  Upload successful
 ```
 
+## Data Format
+
+Input data is NDJSON (one JSON object per line) stored in S3. Each facility record contains:
+
+```json
+{
+  "facility_id": "FAC12345",
+  "facility_name": "City Hospital",
+  "location": { "state": "TX", ... },
+  "employee_count": 250,
+  "services": ["Emergency Care", "Surgery", ...],
+  "accreditations": [
+    { "accreditation_body": "Joint Commission", "valid_until": "2026-12-31" }
+  ]
+}
+```
+
