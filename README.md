@@ -68,8 +68,6 @@ aws-healthcare-pipeline/
 Install dependencies:
 ```bash
 pip install boto3 python-dateutil
-aws configure   # enter your credentials
-python filter_expiring.py
 ```
 
 ## Files
