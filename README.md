@@ -21,3 +21,9 @@ Step Functions orchestrates the full flow with retries and error handling.
 - Query 2: counts accredited facilities grouped by state
 - Results saved automatically to S3 `query-results/` prefix
 
+### Stage 2 — Data Processing with Python
+- `boto3` script reads NDJSON records from S3 line by line
+- Filters any facility with at least one accreditation expiring within 6 months from run date
+- Writes filtered records to separate S3 prefix as NDJSON
+- Full error handling: S3 access errors, malformed JSON lines, unparseable dates, missing fields — all caught and logged without crashing
+
