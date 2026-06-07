@@ -71,7 +71,7 @@ pip install boto3 python-dateutil
 
 Configure AWS credentials on Windows — create this file:
 ```
-C:\Users\USERNAME\.aws\credentials
+.env
 ```
 With this content:
 ```
