@@ -70,7 +70,17 @@ Install dependencies:
 pip install boto3 python-dateutil
 ```
 
-## Files
+Configure AWS credentials on Windows — create this file:
+```
+C:\Users\USERNAME\.aws\credentials
+```
+With this content:
+```
+[default]
+aws_access_key_id = YOUR_KEY
+aws_secret_access_key = YOUR_SECRET
+region = us-east-1
+```
 
 - `filter_expiring.py` — Stage 2: Python filtering script
 - `facilities.json` — Sample NDJSON dataset (3 facilities)
