@@ -145,3 +145,13 @@ your-bucket/
 - S3 bucket private with no public access enabled
 - Lambda follows least-privilege: only S3 and Athena access granted
 
+## Cost
+
+All services used are within AWS Free Tier limits:
+- Lambda: 1M requests/month free
+- Athena: $5/TB scanned (test data is kilobytes — effectively $0)
+- S3: 5GB storage free
+- Step Functions: 4,000 state transitions/month free
+- SNS: 1M requests/month free
+
+See `billing-screenshot.png` for actual AWS cost during this project.
