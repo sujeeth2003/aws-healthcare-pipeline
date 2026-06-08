@@ -42,4 +42,29 @@ def read_facilities_from_s3(s3_client, bucket, key):
         except json.JSONDecodeError as e:
             logger.warning(f"Skipping malformed JSON on line {line_num}: {e}")
 
+    logger.info(f"Loaded {len(facilities)} facility records")
+    return facilities
+
+
+def has_expiring_accreditation(facility, cutoff_date):
+    accreditations = facility.get("accreditations", [])
+    if not accreditations:
+        return False
+
+    for acc in accreditations:
+        valid_until_str = acc.get("valid_until", "")
+        if not valid_until_str:
+            continue
+        try:
+            valid_until = datetime.strptime(valid_until_str, "%Y-%m-%d").replace(
+                tzinfo=timezone.utc
+            )
+            if valid_until <= cutoff_date:
+                return True
+        except ValueError as e:
+            logger.warning(
+                f"Could not parse date '{valid_until_str}' for "
+                f"facility {facility.get('facility_id', 'UNKNOWN')}: {e}"
+            )
+
     main()
