@@ -100,4 +100,22 @@ def main():
 
     facilities = read_facilities_from_s3(s3, BUCKET_NAME, INPUT_PREFIX)
 
+    expiring = [f for f in facilities if has_expiring_accreditation(f, cutoff)]
+    logger.info(
+        f"Facilities with accreditations expiring within 6 months: "
+        f"{len(expiring)} / {len(facilities)}"
+    )
+
+    for f in expiring:
+        logger.info(f"  → {f['facility_id']} — {f['facility_name']}")
+
+    if expiring:
+        write_facilities_to_s3(s3, BUCKET_NAME, OUTPUT_PREFIX, expiring)
+    else:
+        logger.info("No expiring facilities found. Nothing written to output.")
+
+    logger.info("Done.")
+
+
+if __name__ == "__main__":
     main()
