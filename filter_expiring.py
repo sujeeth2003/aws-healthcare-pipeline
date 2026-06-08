@@ -85,4 +85,19 @@ def write_facilities_to_s3(s3_client, bucket, key, facilities):
         logger.error(f"Failed to write to S3: {e}")
         raise
 
+
+def main():
+    now    = datetime.now(tz=timezone.utc)
+    cutoff = now + relativedelta(months=MONTHS_AHEAD)
+    logger.info(f"Today: {now.date()} | Cutoff (6 months out): {cutoff.date()}")
+
+    s3 = boto3.client(
+        "s3",
+        region_name="us-east-1",
+        aws_access_key_id=AWS_ACCESS_KEY,
+        aws_secret_access_key=AWS_SECRET_KEY
+    )
+
+    facilities = read_facilities_from_s3(s3, BUCKET_NAME, INPUT_PREFIX)
+
     main()
